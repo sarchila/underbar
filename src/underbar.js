@@ -49,6 +49,18 @@ var _ = { };
     // TIP: Here's an example of a function that needs to iterate, which we've
     // implemented for you. Instead of using a standard `for` loop, though,
     // it uses the iteration helper `each`, which you will need to write.
+    var matches = [];
+    _.each(array,function(elem, ind){
+      if (elem == target){
+        matches.push(parseInt(ind));
+      }
+    });
+
+    if (matches.length < 1){
+      return -1;
+    } else {
+      return _.first(matches);
+    }
   };
 
   // Return all elements of an array that pass a truth test.
