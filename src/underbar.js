@@ -70,6 +70,15 @@ var _ = { };
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, iterator) {
+    if (Array.isArray(collection)){
+      var filtered = [];
+      _.each(collection,function(element){
+        if (iterator(element)){
+          filtered.push(element);
+        }
+      })
+      return filtered;
+    }
   };
 
   // Return all elements of an array that don't pass a truth test.
