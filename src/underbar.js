@@ -36,8 +36,6 @@ var _ = { };
   // Accepts both arrays and objects.
   _.each = function(collection, iterator) {
     // for both arrays and objects, Object.keys returns keys that can
-    // return paired values. For arrays, each key is simply a string
-    // containing the index. -SA
     var keyArray = Object.keys(collection);
     var keyNum = keyArray.length;
     for(var i = 0 ; i < keyNum ; i++){
