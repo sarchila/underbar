@@ -39,6 +39,14 @@ var _ = { };
   // Call iterator(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
   _.each = function(collection, iterator) {
+    // for both arrays and objects, Object.keys returns keys that can
+    // return paired values. For arrays, each key is simply a string
+    // containing the index. -SA
+    var keyArray = Object.keys(collection);
+    var keyNum = keyArray.length;
+    for(var i = 0 ; i < keyNum ; i++){
+      iterator(collection[keyArray[i]],keyArray[i],collection);
+    }
   };
 
   // Returns the index at which value can be found in the array, or -1 if value
