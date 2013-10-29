@@ -207,6 +207,17 @@ var _ = { };
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    var isFalse = function(item){
+      return !item;
+    }
+    var oppositeIterator = function(arg){
+      return !iterator(arg);
+    }
+    if (arguments.length < 2){
+      return !_.every(collection, isFalse);
+    } else {
+      return !_.every(collection, oppositeIterator);
+    }
   };
 
 
