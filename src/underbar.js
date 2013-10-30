@@ -253,7 +253,7 @@ var _ = { };
   _.defaults = function(obj) {
     _.each(arguments,function(eachObj){
       _.each(eachObj,function(value,key){
-        if (!_.contains(Object.keys(obj),key)){
+        if (!(key in obj)){
           obj[key] = value;
         }
       });
