@@ -334,24 +334,13 @@ var _ = { };
 
   // Shuffle an array.
   _.shuffle = function(array) {
-    
-    var pickRandomIndex = function(len){
-      // length 2 > 0/2 , 1/2 , 2/2
-      // length 3 > 0/3 , 1/3 , 2/3 , 3/3
-      // length 4 > 0/4 , 1/4 , 2/4 , 3/4 , 4/4
-      var rand = Math.random();
-      for (var i = 0 ; i < len ; i++){
-        if (rand >= i/len && rand < (i+1)/len){
-          return i;
-        }
-      }
-    }
 
     var unshuffledArray = array.slice();
     var shuffledArray = [];
     var randInd;
+    
     for (var j = 0; j < array.length; j++){
-      randInd = pickRandomIndex(unshuffledArray.length);
+      randInd = Math.floor(unshuffledArray.length*Math.random());
       shuffledArray.push(unshuffledArray[randInd]);
       unshuffledArray.splice(randInd, 1);
     }
