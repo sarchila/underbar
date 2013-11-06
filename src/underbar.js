@@ -376,12 +376,12 @@ var _ = { };
   _.flatten = function(nestedArray, result) {
     var result = result || [];
 
-    if (!Array.isArray(nestedArray)){
-      result.push(nestedArray);
-    } else {
+    if (Array.isArray(nestedArray)){
       _.each(nestedArray, function (elem){
         _.flatten(elem, result);
       });
+    } else {
+      result.push(nestedArray);
     }
 
     return result;
