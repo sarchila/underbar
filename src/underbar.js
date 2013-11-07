@@ -503,6 +503,43 @@ var _ = { };
   //
   // See the Underbar readme for details.
   _.throttle = function(func, wait) {
+    var timeAround = 0;
+    var firstTimemsec;
+    var result;
+
+    return function(){
+      var thisTimemsec = new Date().getTime();
+      console.log("gone around " + timeAround + " time(s) before");
+      if (timeAround===0){
+        firstTimemsec = thisTimemsec;
+        console.log("Went down firstTime branch.  Time between calls was " + (thisTimemsec - firstTimemsec) + " msec");
+        result = func.apply(this, arguments);
+        console.log("function applied!  Now counter = " + result);
+      } else if ((thisTimemsec - firstTimemsec) < wait && timeAround===1){
+        var timeSinceFirst = (thisTimemsec - firstTimemsec);
+        var timeLeft = wait - timeSinceFirst;
+        console.log("Went down secondTime branch.  Time between calls was " + timeSinceFirst + " msec");
+        console.log("   Time left is " + timeLeft + " msec");
+        setTimeout(function(){
+          var afterTimeoutmsec = new Date().getTime();
+          result = func.apply(this, arguments);
+          console.log(".......((Time since first call is " + (afterTimeoutmsec - firstTimemsec) + " msec");
+            firstTimemsec = afterTimeoutmsec;
+          timeAround = 1;
+          console.log("function applied!  Now counter = " + result + "))");
+          console.log("----------------------------------------");
+        },timeLeft);
+      } else if ((thisTimemsec - firstTimemsec) >= wait) {
+        console.log("Went down third branch.  Time between calls was " + (thisTimemsec - firstTimemsec) + " msec");
+        timeAround = 0;
+        result = func.apply(this, arguments);
+        console.log("function applied!  Now counter = " + result);
+      }
+      console.log("returned result is: " + result);
+      timeAround++;
+      console.log("----------------------------------------");
+      return result;
+    };
   };
 
 }).call(this);
