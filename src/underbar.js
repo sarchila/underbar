@@ -429,6 +429,47 @@ var _ = { };
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+    var result = [];
+    var args = arguments;
+    
+    // No sense in traversing a gigantic array if one is passed in.
+    // Save time/resources by finding the shortest argument first
+    var shortestArg = _.reduce(arguments, function(shortest, arg){
+      if (shortest.length > arg.length){
+        shortest = arg;
+      }
+      return shortest;
+    },arguments[0]);
+
+    // function that returns true if every array
+    // passed in contains the target element
+    var everyContains = function (arrays, target){
+      return _.every(arrays,function(elem){
+        return _.contains(elem,target);
+      });
+    }
+
+    // grabs each element from the shortest argument
+    // array and checks if every array passed in
+    // initially contains that element.  If so, it is
+    // added to the result array
+    _.each(shortestArg, function(elem){
+      if(everyContains(args,elem)){
+        result.push(elem);
+      }
+    });
+
+    // looks like the native underscore intersection
+    // method returns a sorted array, so I'm sorting it
+    return result.sort(function(a,b){
+      if (a < b){
+        return -1;
+      } else if (b < a){
+        return 1;
+      } else {
+        return 0;
+      }
+    });
   };
 
   // Take the difference between one array and a number of other arrays.
